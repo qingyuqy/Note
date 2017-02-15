@@ -10,4 +10,4 @@
 
 <img src="/screenshots/home.png" width="360" height="640" />
 
-基于https://github.com/Jhuster/JNote开源代码写的一款便签软件
+基于https://github.com/Jhuster/JNote 开源代码写的一款便签软件
