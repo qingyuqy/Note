@@ -9,11 +9,13 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.jhuster.qnote.R;
 
 public abstract class BaseActivity extends Activity {
 

@@ -9,7 +9,7 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,8 +19,9 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jhuster.jnote.db.NoteDB;
-import com.jhuster.jnote.db.NoteDB.Note;
+import com.jhuster.qnote.R;
+import com.qingyu.qnote.db.NoteDB;
+import com.qingyu.qnote.db.NoteDB.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

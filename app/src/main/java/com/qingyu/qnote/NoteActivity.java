@@ -9,26 +9,28 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
-import com.jhuster.jnote.db.NoteDB;
-import com.jhuster.jnote.db.NoteDB.Note;
-import com.jhuster.jnote.markdown.MDWriter;
+import com.jhuster.qnote.R;
+import com.qingyu.qnote.db.NoteDB;
+import com.qingyu.qnote.db.NoteDB.Note;
 
 import java.util.Calendar;
 
 public class NoteActivity extends BaseActivity {
 
     private Note mNote = new Note();
-    private MDWriter mMDWriter;
-    private EditText mNoteEditText;
+  //  private MDWriter mMDWriter;
+    private EditText contentEditText;
+    private  EditText tittleEditText;
+    private  EditText signEditText;
+    private String sign = "QingYu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,15 @@ public class NoteActivity extends BaseActivity {
     @Override
     protected void onPause() {
         onSaveNote();
+        //loadData();
         super.onPause();
     }
 
+/*   @Override
+    protected void onResume() {
+        loadData();
+        super.onResume();
+    }*/
     @Override
     protected void initVariables() {
 
@@ -56,18 +64,23 @@ public class NoteActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         setContentView(R.layout.activity_note);
-        mNoteEditText = (EditText) findViewById(R.id.NoteEditText);
+        contentEditText = (EditText) findViewById(R.id.ContentEditText);
+        tittleEditText = (EditText) findViewById(R.id.TittleEditText);
+        signEditText =(EditText)findViewById(R.id.signEditText);
     }
 
     @Override
     protected void loadData() {
-        mMDWriter = new MDWriter(mNoteEditText);
+       // mMDWriter = new MDWriter(contentEditText);
         mNote.key = getIntent().getLongExtra("NoteId", -1);
         if (mNote.key != -1) {
             Note note = NoteDB.getInstance().get(mNote.key);
             if (note != null) {
-                mMDWriter.setContent(note.content);
+                //mMDWriter.setContent(note.content);
                 mNote = note;
+                tittleEditText.setText(mNote.title);
+                contentEditText.setText(mNote.content);
+                signEditText.setText(mNote.signature);
             } else {
                 mNote.key = -1;
             }
@@ -86,7 +99,9 @@ public class NoteActivity extends BaseActivity {
         if (id == R.id.action_display) {
             onSaveNote();
             Intent intent = new Intent(this, DisplayActivity.class);
-            intent.putExtra("Content", mMDWriter.getContent());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("note",mNote);
+            intent.putExtras(bundle);
             startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
@@ -95,7 +110,7 @@ public class NoteActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickHeader(View v) {
+/*    public void onClickHeader(View v) {
         mMDWriter.setAsHeader();
     }
 
@@ -113,11 +128,15 @@ public class NoteActivity extends BaseActivity {
 
     public void onClickQuote(View v) {
         mMDWriter.setAsQuote();
-    }
+    }*/
 
     public void onSaveNote() {
-        mNote.title = mMDWriter.getTitle();
-        mNote.content = mMDWriter.getContent();
+       /* mNote.title = mMDWriter.getTitle();;
+        mNote.content = mMDWriter.getContent();*/
+        mNote.title = tittleEditText.getText().toString();
+        mNote.content = contentEditText.getText().toString();
+        mNote.signature = sign;
+
         if (mNote.key == -1) {
             if (!"".equals(mNote.content)) {
                 mNote.date = Calendar.getInstance().getTimeInMillis();

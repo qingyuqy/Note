@@ -9,12 +9,13 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import java.util.Calendar;
 
-import com.jhuster.jnote.db.NoteDB;
-import com.jhuster.jnote.db.NoteDB.Note;
+import com.jhuster.qnote.R;
+import com.qingyu.qnote.db.NoteDB;
+import com.qingyu.qnote.db.NoteDB.Note;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -188,6 +189,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         Note note = new Note();
         note.title = "Markdown功能介绍";
         note.content = builder.toString();
+        note.signature = "Qingyu";
         note.date = Calendar.getInstance().getTimeInMillis();
         NoteDB.getInstance().insert(note);
         SharedPreferences.Editor edit = mSharedPreferences.edit();

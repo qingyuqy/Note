@@ -4,13 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:background="@color/white">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
-        android:id="@+id/DisplayTextView"
+        android:id="@+id/TitileTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"                  
+        android:padding="10sp"
+        android:textSize="15sp"
+        android:singleLine="true"
         android:background="@color/white"
         android:lineSpacingMultiplier="1.2"/>
-            
+    <TextView
+        android:id="@+id/ContentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:padding="10sp"
+        android:background="@color/white"
+        android:lineSpacingMultiplier="1.2"/>
+    <TextView
+        android:id="@+id/SignTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:textSize="10sp"
+        android:gravity="right"
+        android:background="@color/white"
+        android:lineSpacingMultiplier="1.2"/>
+</LinearLayout>
 </ScrollView>

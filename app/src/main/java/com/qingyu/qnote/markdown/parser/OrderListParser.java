@@ -9,22 +9,22 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote.markdown.parser;
+package com.qingyu.qnote.markdown.parser;
 
-import com.jhuster.jnote.markdown.Markdown;
-import com.jhuster.jnote.markdown.Markdown.MDParser;
-import com.jhuster.jnote.markdown.Markdown.MDWord;
+import com.qingyu.qnote.markdown.Markdown;
+import com.qingyu.qnote.markdown.Markdown.MDParser;
+import com.qingyu.qnote.markdown.Markdown.MDWord;
 
-public class UnOrderListParser extends MDParser {
+public class OrderListParser extends MDParser {
 
-    private static final char KEY = '-';
+    private static final String KEY = "^[0-9].*";
 
     @Override
     public MDWord parseLineFmt(String content) {
-        if (content.charAt(0) != KEY) {
+        if (!content.matches(KEY)) {
             return MDWord.NULL;
         }
-        return new MDWord("", 1, Markdown.MD_FMT_UNORDER_LIST);
+        return new MDWord("", 0, Markdown.MD_FMT_ORDER_LIST);
     }
 
     @Override

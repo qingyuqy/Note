@@ -9,12 +9,12 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote.markdown;
+package com.qingyu.qnote.markdown;
 
 import java.util.List;
 
-import com.jhuster.jnote.markdown.Markdown.MDLine;
-import com.jhuster.jnote.markdown.Markdown.MDWord;
+import com.qingyu.qnote.markdown.Markdown.MDLine;
+import com.qingyu.qnote.markdown.Markdown.MDWord;
 
 import android.graphics.Color;
 import android.text.Layout;

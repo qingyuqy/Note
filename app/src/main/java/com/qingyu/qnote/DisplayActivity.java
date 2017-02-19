@@ -9,7 +9,7 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,12 +18,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import com.jhuster.jnote.markdown.MDReader;
+import com.jhuster.qnote.R;
+import com.qingyu.qnote.db.NoteDB;
+import com.qingyu.qnote.markdown.MDReader;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -36,12 +40,14 @@ import android.widget.TextView.BufferType;
 
 public class DisplayActivity extends BaseActivity {
 
-    private static final String DEFAULT_DIR = Environment.getExternalStorageDirectory() + File.separator + "JNote";
+    private static final String DEFAULT_DIR = Environment.getExternalStorageDirectory() + File.separator + "QNote";
 
-    private TextView mTextView;
+    private TextView tTextView;
+    private TextView cTextView;
+    private TextView sTextView;
     private MDReader mMDReader;
     private ScrollView mRootView;
-
+    private NoteDB.Note note;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,7 +58,8 @@ public class DisplayActivity extends BaseActivity {
     @Override
     protected void initVariables() {
         String content = getIntent().getExtras().getString("Content");
-        mMDReader = new MDReader(content);
+        note = (NoteDB.Note) this.getIntent().getSerializableExtra("note");
+        mMDReader = new MDReader(note.content);
         checkStorageDir();
     }
 
@@ -60,8 +67,14 @@ public class DisplayActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         setContentView(R.layout.activity_display);
         mRootView = (ScrollView) findViewById(R.id.DisplayRootView);
-        mTextView = (TextView) findViewById(R.id.DisplayTextView);
-        mTextView.setTextKeepState(mMDReader.getFormattedContent(), BufferType.SPANNABLE);
+        tTextView = (TextView) findViewById(R.id.TitileTextView);
+        cTextView = (TextView)findViewById(R.id.ContentTextView);
+        sTextView = (TextView)findViewById(R.id.SignTextView);
+
+        //mTextView.setTextKeepState(mMDReader.getFormattedContent(), BufferType.SPANNABLE);
+        tTextView.setTextKeepState(note.title,BufferType.SPANNABLE);
+        cTextView.setTextKeepState(note.content,BufferType.SPANNABLE);
+        sTextView.setTextKeepState(note.signature,BufferType.SPANNABLE);
     }
 
     @Override
@@ -153,13 +166,18 @@ public class DisplayActivity extends BaseActivity {
         if (!checkSaveEnv()) {
             return;
         }
-        String filepath = DEFAULT_DIR + File.separator + mMDReader.getTitle() + ".jpg";
+        String filepath = DEFAULT_DIR + File.separator + note.title+ ".jpg";
         try {
             FileOutputStream stream = new FileOutputStream(filepath);
             Bitmap bitmap = createBitmap(mRootView);
             if (bitmap != null) {
                 bitmap.compress(CompressFormat.JPEG, 100, stream);
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                Uri uri = Uri.fromFile(new File(filepath));
+                intent.setData(uri);
+                this.getApplicationContext().sendBroadcast(intent);
                 Toast.makeText(this, "成功保存到:" + filepath, Toast.LENGTH_LONG).show();
+
             }
             stream.close();
         } catch (FileNotFoundException e) {

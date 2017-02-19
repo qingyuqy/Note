@@ -9,7 +9,7 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote.db;
+package com.qingyu.qnote.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class NoteDB {
 
     protected static final String DB_TABLE_COLUMN_TITLE = "title";
     protected static final String DB_TABLE_COLUMN_CONTENT = "content";
+    protected static final String DB_TABLE_COLUMN_SIGN = "sign";
     protected static final String DB_TABLE_COLUMN_DATE = "date";
 
     protected static final String DB_DEFAULT_ORDERBY = DB_TABLE_COLUMN_DATE + " DESC";
@@ -45,12 +47,14 @@ public class NoteDB {
     private final String DB_TABLE_CREATE_SQL = "create table " + DB_TABLE_NAME + " (_id integer primary key autoincrement, "
             + DB_TABLE_COLUMN_TITLE + " text not null, "
             + DB_TABLE_COLUMN_CONTENT + " text not null, "
+            + DB_TABLE_COLUMN_SIGN + " text not null, "
             + DB_TABLE_COLUMN_DATE + " integer);";
 
-    public static class Note {
+    public static class Note implements Serializable {
         public long key = -1;
         public String title;
         public String content;
+        public String signature;
         public long date;
     }
 
@@ -62,6 +66,7 @@ public class NoteDB {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(DB_TABLE_CREATE_SQL);
+            System.out.println(DB_TABLE_CREATE_SQL);
         }
 
         @Override
@@ -111,6 +116,7 @@ public class NoteDB {
         ContentValues values = new ContentValues();
         values.put(DB_TABLE_COLUMN_TITLE, note.title);
         values.put(DB_TABLE_COLUMN_CONTENT, note.content);
+        values.put(DB_TABLE_COLUMN_SIGN, note.signature);
         values.put(DB_TABLE_COLUMN_DATE, note.date);
         note.key = mDB.insert(DB_TABLE_NAME, null, values);
         if (note.key == -1) {
@@ -127,6 +133,7 @@ public class NoteDB {
         ContentValues values = new ContentValues();
         values.put(DB_TABLE_COLUMN_TITLE, note.title);
         values.put(DB_TABLE_COLUMN_CONTENT, note.content);
+        values.put(DB_TABLE_COLUMN_SIGN, note.signature);
         values.put(DB_TABLE_COLUMN_DATE, note.date);
         String condition = DB_PRIMARY_KEY + "=" + "\'" + note.key + "\'";
         if (!update(values, condition, null)) {
@@ -226,6 +233,7 @@ public class NoteDB {
             note.key = cursor.getLong(cursor.getColumnIndex(DB_PRIMARY_KEY));
             note.title = cursor.getString(cursor.getColumnIndex(DB_TABLE_COLUMN_TITLE));
             note.content = cursor.getString(cursor.getColumnIndex(DB_TABLE_COLUMN_CONTENT));
+            note.signature = cursor.getString(cursor.getColumnIndex(DB_TABLE_COLUMN_SIGN));
             note.date = cursor.getLong(cursor.getColumnIndex(DB_TABLE_COLUMN_DATE));
             notes.add(note);
         } while (cursor.moveToNext());

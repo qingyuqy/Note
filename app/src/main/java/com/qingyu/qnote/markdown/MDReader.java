@@ -9,20 +9,20 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote.markdown;
+package com.qingyu.qnote.markdown;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jhuster.jnote.markdown.Markdown.MDLine;
-import com.jhuster.jnote.markdown.Markdown.MDParser;
-import com.jhuster.jnote.markdown.Markdown.MDWord;
-import com.jhuster.jnote.markdown.parser.BoldParser;
-import com.jhuster.jnote.markdown.parser.CenterParser;
-import com.jhuster.jnote.markdown.parser.HeaderParser;
-import com.jhuster.jnote.markdown.parser.OrderListParser;
-import com.jhuster.jnote.markdown.parser.QuoteParser;
-import com.jhuster.jnote.markdown.parser.UnOrderListParser;
+import com.qingyu.qnote.markdown.Markdown.MDLine;
+import com.qingyu.qnote.markdown.Markdown.MDParser;
+import com.qingyu.qnote.markdown.Markdown.MDWord;
+import com.qingyu.qnote.markdown.parser.BoldParser;
+import com.qingyu.qnote.markdown.parser.CenterParser;
+import com.qingyu.qnote.markdown.parser.HeaderParser;
+import com.qingyu.qnote.markdown.parser.OrderListParser;
+import com.qingyu.qnote.markdown.parser.QuoteParser;
+import com.qingyu.qnote.markdown.parser.UnOrderListParser;
 
 import android.text.SpannableStringBuilder;
 import android.util.Log;
@@ -139,6 +139,6 @@ public class MDReader {
                 builder.append("Word: " + word.mRawContent + ", " + word.mFormat + "\n");
             }
         }
-        Log.d("JNote", builder.toString());
+        Log.d("QNote", builder.toString());
     }
 }

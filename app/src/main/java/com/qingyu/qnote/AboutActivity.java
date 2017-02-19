@@ -9,7 +9,7 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote;
+package com.qingyu.qnote;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,7 +18,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import com.jhuster.jnote.markdown.MDReader;
+import com.jhuster.qnote.R;
+import com.qingyu.qnote.markdown.MDReader;
 
 public class AboutActivity extends BaseActivity {
 
@@ -40,7 +41,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         setContentView(R.layout.activity_display);
-        mTextView = (TextView) findViewById(R.id.DisplayTextView);
+        mTextView = (TextView) findViewById(R.id.TitileTextView);
     }
 
     @Override
@@ -61,12 +62,8 @@ public class AboutActivity extends BaseActivity {
 
     protected String getAboutAuthor() {
         StringBuilder builder = new StringBuilder();
-        builder.append("# **关于软件:**\n\n");
-        builder.append("- 版本号: " + getVersionDescription() + "\n\n");
-        builder.append("# **关于作者:**\n\n");
-        builder.append("### 卢俊\n\n");
-        builder.append("- 联系方式: lujun.hust@gmail.com \n\n");
-        builder.append("- 个人网站: http://www.jhuster.com \n\n");
+        builder.append("# **版本号:**" + getVersionDescription() + "\n\n");
+        builder.append("# **关于作者:**qingyu\n\n");
         return builder.toString();
     }
 }

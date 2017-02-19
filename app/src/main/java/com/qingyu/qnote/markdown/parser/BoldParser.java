@@ -9,15 +9,15 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; version 2 of the License.
  */
-package com.jhuster.jnote.markdown.parser;
+package com.qingyu.qnote.markdown.parser;
 
-import com.jhuster.jnote.markdown.Markdown;
-import com.jhuster.jnote.markdown.Markdown.MDParser;
-import com.jhuster.jnote.markdown.Markdown.MDWord;
+import com.qingyu.qnote.markdown.Markdown;
+import com.qingyu.qnote.markdown.Markdown.MDParser;
+import com.qingyu.qnote.markdown.Markdown.MDWord;
 
-public class ItalicParser extends MDParser {
+public class BoldParser extends MDParser {
 
-    private static final String KEY = "*";
+    private static final String KEY = "**";
 
     @Override
     public MDWord parseLineFmt(String content) {
@@ -29,10 +29,11 @@ public class ItalicParser extends MDParser {
         if (!content.startsWith(KEY)) {
             return MDWord.NULL;
         }
-        int position = content.indexOf(KEY, 1);
+        int position = content.indexOf(KEY, 2);
         if (position == -1) {
             return MDWord.NULL;
         }
-        return new MDWord(content.substring(1, position), position + 1, Markdown.MD_FMT_ITALIC);
+        return new MDWord(content.substring(2, position), position + 2, Markdown.MD_FMT_BOLD);
     }
+
 }
